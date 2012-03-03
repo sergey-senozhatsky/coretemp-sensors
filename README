@@ -1,0 +1,51 @@
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+    MA 02110-1301 USA.
+ 
+Author: Sergey Senozhatsky, 2012
+
+coretemp-sensors
+--------------------------------------------------------------------------------
+Naive script to output coretemp sysfs data per-CPU core.
+
+I've been using lm_sensors for a while to monitor current CPU core temp.
+However, I wasn't very much impressed with sensors memory usage
+		 VIRT:51156 RES:38m SHR:1256
+so I came up with easy and light script, that fulfills my needs.
+
+
+- Temp data output is in Celsius units.
+
+- Script works only with coretemp sysfs attributes and doesn't perform any
+	CPUID based discover/lookup. It's been only tested on Intel CPU and as a
+	result has explicit check for vendor_id GenuineIntel and cpu family >= 6,
+	which some of you may find moronic.
+
+If, for some reason, script doesn't fit your requirements, please consider
+either (or both):
+-- use lm_sensors;
+-- send me a patch.
+
+
+usage
+--------------------------------------------------------------------------------
+
+coretemp-sensors [-t timeout] [-c]
+	-t: loop mode with timeout seconds sleep
+	-c: clear screen before reporting
+
+
+-ss
+
