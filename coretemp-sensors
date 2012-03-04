@@ -76,8 +76,8 @@ function report_coretemp {
 		let MAX=MAX/1000;
 		let CRIT=CRIT/1000;
 	
-		let MAX_THRESHOLD10=$MAX-$MAX/10;
-		let MAX_THRESHOLD5=$MAX-$MAX/5;
+		let MAX_THRESHOLD13=$MAX-13*$MAX/100;
+		let MAX_THRESHOLD7=$MAX-7*$MAX/100;
 
 		INPUT_STR="\t ${INPUT}${TEMP_UNIT}  "
 		if [ ${INPUT} -gt ${MAX} ]; then
@@ -85,9 +85,9 @@ function report_coretemp {
 				SPC=" "
 			fi
 			INPUT_STR="\e[01;41m\t ${INPUT}${TEMP_UNIT}${SPC} \e[00m"
-		elif [ ${INPUT} -gt ${MAX_THRESHOLD10} ]; then
+		elif [ ${INPUT} -gt ${MAX_THRESHOLD7} ]; then
 			INPUT_STR="\e[01;45m\t ${INPUT}${TEMP_UNIT}  \e[00m"
-		elif [ ${INPUT} -gt ${MAX_THRESHOLD5} ]; then
+		elif [ ${INPUT} -gt ${MAX_THRESHOLD13} ]; then
 			INPUT_STR="\e[01;43m\t ${INPUT}${TEMP_UNIT}  \e[00m"
 		fi
 		MAX_STR=" ${MAX}${TEMP_UNIT} "
