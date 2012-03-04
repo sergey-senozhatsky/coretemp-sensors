@@ -28,6 +28,8 @@ so I came up with easy and light script, that fulfills my needs.
 
 - Temp data output is in Celsius units.
 
+- Coretemp INPUT stat is colored according to 7%, 13% and MAX WATERMARKS.
+
 - Script works only with coretemp sysfs attributes and doesn't perform any
 	CPUID based discover/lookup. It's been only tested on Intel CPU and as a
 	result has explicit check for vendor_id GenuineIntel and cpu family >= 6,
