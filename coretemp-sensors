@@ -61,7 +61,7 @@ function report_coretemp {
 	# The attr number is always core id + 2.
 	#
 
-	cd /sys/devices/platform/coretemp.0
+	cd /sys/devices/platform/coretemp.0/hwmon/hwmon0
 	echo -e "driver: `cat name`"
 
 	CID=0
