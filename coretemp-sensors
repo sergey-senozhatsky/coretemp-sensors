@@ -55,6 +55,27 @@ function init {
 	fi
 }
 
+function get_battery_status {
+	if [ ! -f "/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1/charge_full" ]; then
+		echo ""
+		return
+	fi
+
+	FULL=`cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1/charge_full`
+	CURR=`cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1/current_now`
+	RATIO=$((($CURR * 100) / $FULL))
+	OUT=""
+
+	OUT="\t Bat1: ${RATIO}%"
+	if [ ${RATIO} -lt 21 ]; then
+		OUT="Bat1: \e[01;43m\t ${RATIO}% \e[00m"
+	fi
+	if [ ${RATIO} -lt 11 ]; then
+		OUT="Bat1: \e[01;41m\t ${RATIO}% \e[00m"
+	fi
+	echo "$OUT"
+}
+
 function report_coretemp {
 	#
 	# Coretemp map the attr number to core id of the CPU.
@@ -66,7 +87,7 @@ function report_coretemp {
 
 	CID=0
 	for CID in $(seq $CORENR); do
-		let CID=$CID*2
+		let CID=$CID+1
 		LABEL=`cat temp${CID}_label`
 		INPUT=`cat temp${CID}_input`
 		MAX=`cat temp${CID}_max`
@@ -95,7 +116,8 @@ function report_coretemp {
 		MAX_STR=" ${MAX}${TEMP_UNIT} "
 		CRIT_STR=" ${CRIT}${TEMP_UNIT}"
 
-		echo -e "$LABEL: $INPUT_STR (max =+$MAX_STR crit =+$CRIT_STR)"
+		BAT=$(get_battery_status)
+		echo -e "$LABEL: $INPUT_STR (max =+$MAX_STR crit =+$CRIT_STR) ${BAT}"
 	done
 }
 
