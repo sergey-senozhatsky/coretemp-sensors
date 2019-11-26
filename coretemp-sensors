@@ -86,6 +86,11 @@ function report_coretemp {
 	CID=0
 	for CID in $(seq $CORENR); do
 		let CID=$CID+1
+
+		if [ ! -f temp${CID}_label ]; then
+			continue
+		fi
+
 		LABEL=`cat temp${CID}_label`
 		INPUT=`cat temp${CID}_input`
 		MAX=`cat temp${CID}_max`
@@ -141,4 +146,3 @@ while [ ${LOOP} -eq 1 ]; do
 	report_coretemp
 	sleep $SLEEP
 done
-
